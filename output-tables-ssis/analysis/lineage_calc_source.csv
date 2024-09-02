@@ -1,0 +1,4 @@
+CALC_VIEW,SOURCE,CALC_ID,SOURCE_ID,LINK_VALUE,COLOR
+lineages.csv,dbo.Suppliers_Extract,0,3,1,aliceblue
+lineages.csv,dbo.Products_Extract,0,1,1,aliceblue
+lineages.csv,dbo.Supp_Prod_output,0,2,1,aliceblue

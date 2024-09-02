@@ -1,0 +1,4 @@
+,TRANSFORMATION,SOURCE_FIELD,SOURCE_NODE,TARGET_FIELD,TARGET_NODE,LINK_VALUE,ROW_ID,COLOR
+0,,SPRAS,22,SPRAS,29,1,0,aliceblue
+1,,MaterialGroup,22,MaterialGroup,29,1,1,aliceblue
+2,,MaterialGroupText,22,MaterialGroupText,29,1,2,aliceblue

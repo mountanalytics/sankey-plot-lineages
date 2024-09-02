@@ -1,0 +1,307 @@
+,LABEL_NODE,ID,FUNCTION,JOIN_ARG,NAME_NODE,FILTER,COLOR
+0,BILLING_DOC_HDR,0,DataSources,,BILLING_DOC_HDR,,black
+1,B_BillingHdr@BillingDocHdr_P,1,ProjectionView,,BillingDocHdr_P,,black
+2,B_BillingHdr@Semantics,2,Semantics,,Semantics,,black
+3,BILLING_DOC_ITM,3,DataSources,,BILLING_DOC_ITM,,black
+4,B_BillingItem@BillingDocItem,4,ProjectionView,,BillingDocItem,,black
+5,B_BillingItem@Semantics,5,Semantics,,Semantics,,black
+6,BILL_CAT_TEXT,6,DataSources,,BILL_CAT_TEXT,,black
+7,D_BillingCategoryText@Semantics,7,Semantics,,Semantics,,black
+8,COMP_CODE_ATTR,8,DataSources,,COMP_CODE_ATTR,,black
+9,COMP_CODE_TEXT,9,DataSources,,COMP_CODE_TEXT,,black
+10,D_COMPANY_CODE@COMPCODE_ATTR_P,10,ProjectionView,,COMPCODE_ATTR_P,,black
+11,D_COMPANY_CODE@COMCODE_TEXT_P,11,ProjectionView,,COMCODE_TEXT_P,,black
+12,D_COMPANY_CODE@Join_1,12,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'BUKRS', 'Cardinality': 'CN_1'}",Join_1,,black
+13,D_COMPANY_CODE@Semantics,13,Semantics,,Semantics,,black
+14,CUSTOMER_ATTR,14,DataSources,,CUSTOMER_ATTR,,black
+15,CUSTOMER_TEXT,15,DataSources,,CUSTOMER_TEXT,,black
+16,D_Customer@Cust_Attr_P,16,ProjectionView,,Cust_Attr_P,,black
+17,D_Customer@Cust_Txt_P,17,ProjectionView,,Cust_Txt_P,,black
+18,D_Customer@Join_1,18,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CustomerNumber', 'Cardinality': 'CN_1'}",Join_1,,black
+19,D_Customer@Semantics,19,Semantics,,Semantics,,black
+20,MATERIAL_ATTR,20,DataSources,,MATERIAL_ATTR,,black
+21,MATERIAL_TEXT,21,DataSources,,MATERIAL_TEXT,,black
+22,MATL_GROUP_TEXT,22,DataSources,,MATL_GROUP_TEXT,,black
+23,D_Material@MatAttr_P,23,ProjectionView,,MatAttr_P,,black
+24,D_Material@MatText_P,24,ProjectionView,,MatText_P,,black
+25,D_Material@Projection_1,25,ProjectionView,,Projection_1,"""SPRAS"" IN ('E', '1')",dodgerblue
+26,D_Material@Join_1_1,26,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_1_1,,black
+27,D_Material@Join_1_2,27,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'Material', 'Cardinality': 'C1_1'}",Join_1_2,,black
+28,D_Material@Semantics,28,Semantics,,Semantics,,black
+29,D_MATGROUP_TEXT@Semantics,29,Semantics,,Semantics,,black
+30,SALESORG_ATTR,30,DataSources,,SALESORG_ATTR,,black
+31,SALESORG_TEXT,31,DataSources,,SALESORG_TEXT,,black
+32,D_SalesOrganization@SALESORG_ATTR_P,32,ProjectionView,,SALESORG_ATTR_P,,black
+33,D_SalesOrganization@SALESORG_TEXT_P,33,ProjectionView,,SALESORG_TEXT_P,,black
+34,D_SalesOrganization@Join_1,34,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'SalesOrganization', 'Cardinality': 'C1_1'}",Join_1,,black
+35,D_SalesOrganization@Semantics,35,Semantics,,Semantics,,black
+36,ACCOUNTS_PAYABLE,36,DataSources,,ACCOUNTS_PAYABLE,,black
+37,VENDOR_TEXT,37,DataSources,,VENDOR_TEXT,,black
+38,COUNTRY_TEXT,38,DataSources,,COUNTRY_TEXT,,black
+39,Q_AccountsPayable@Projection_1,39,ProjectionView,,Projection_1,"""Clearingdate""='00000000'",dodgerblue
+40,Q_AccountsPayable@Projection_2,40,ProjectionView,,Projection_2,,black
+41,Q_AccountsPayable@Join_1,41,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Vendor', 'Cardinality': 'CN_1'}",Join_1,,black
+42,Q_AccountsPayable@Projection_3,42,ProjectionView,,Projection_3,"""SPRAS""='E'",dodgerblue
+43,Q_AccountsPayable@Join_2,43,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Country', 'Cardinality': 'CN_1'}",Join_2,,black
+44,Q_AccountsPayable@Projection_4,44,ProjectionView,,Projection_4,,black
+45,Q_AccountsPayable@Join_3,45,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_3,,black
+46,Q_AccountsPayable@IP_AgingDate,46,Local_variable,,IP_AgingDate,,black
+47,Q_AccountsPayable@Semantics,47,Semantics,,Semantics,,black
+48,ACCOUNTS_RECEIVABLE,48,DataSources,,ACCOUNTS_RECEIVABLE,,black
+49,Q_CustomerMasterList,49,DataSources,,Q_CustomerMasterList,,black
+50,Q_AccountsReceivable@Projection_1,50,ProjectionView,,Projection_1,"""ClearingDate""='00000000'",dodgerblue
+51,Q_AccountsReceivable@Projection_2,51,ProjectionView,,Projection_2,,black
+52,Q_AccountsReceivable@Join_1,52,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CustomerNumber', 'Cardinality': 'CN_1'}",Join_1,,black
+53,Q_AccountsReceivable@Projection_3,53,ProjectionView,,Projection_3,"""SPRAS""='E'",dodgerblue
+54,Q_AccountsReceivable@Join_2,54,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Country', 'Cardinality': 'CN_1'}",Join_2,,black
+55,Q_AccountsReceivable@Projection_4,55,ProjectionView,,Projection_4,,black
+56,Q_AccountsReceivable@Join_3,56,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_3,,black
+57,Q_AccountsReceivable@IP_AgingDate,57,Local_variable,,IP_AgingDate,,black
+58,Q_AccountsReceivable@Semantics,58,Semantics,,Semantics,,black
+59,B_BillingHdr,59,DataSources,,B_BillingHdr,,black
+60,B_BillingItem,60,DataSources,,B_BillingItem,,black
+61,D_SalesOrganization,61,DataSources,,D_SalesOrganization,,black
+62,D_Material,62,DataSources,,D_Material,,black
+63,D_MATGROUP_TEXT,63,DataSources,,D_MATGROUP_TEXT,,black
+64,D_COMPANY_CODE,64,DataSources,,D_COMPANY_CODE,,black
+65,D_BillingCategoryText,65,DataSources,,D_BillingCategoryText,,black
+66,D_Customer,66,DataSources,,D_Customer,,black
+67,Payer_P$$$$D_Customer$$,67,DataSources,,Payer_P$$$$D_Customer$$,,black
+68,Customer_P$$$$D_Customer$$,68,DataSources,,Customer_P$$$$D_Customer$$,,black
+69,M_TIME_DIMENSION,69,DataSources,,M_TIME_DIMENSION,,black
+70,Q_BillingDoc@BillingHdr_P,70,ProjectionView,,BillingHdr_P,,black
+71,Q_BillingDoc@BillingItem_P,71,ProjectionView,,BillingItem_P,,black
+72,Q_BillingDoc@Join_1,72,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'BillingDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+73,Q_BillingDoc@SalesOrg_P,73,ProjectionView,,SalesOrg_P,,black
+74,Q_BillingDoc@Join_2,74,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrganization', 'Cardinality': 'CN_1'}",Join_2,,black
+75,Q_BillingDoc@Material_P,75,ProjectionView,,Material_P,,black
+76,Q_BillingDoc@Join_3,76,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+77,Q_BillingDoc@Join_4,77,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+78,Q_BillingDoc@Projection_1,78,ProjectionView,,Projection_1,,black
+79,Q_BillingDoc@COMPCODE_P,79,ProjectionView,,COMPCODE_P,,black
+80,Q_BillingDoc@Join_5,80,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_5,,black
+81,Q_BillingDoc@BillingCategory_P,81,ProjectionView,,BillingCategory_P,,black
+82,Q_BillingDoc@Join_6,82,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'BillingDocumentCategory', 'Cardinality': 'CN_1'}",Join_6,,black
+83,Q_BillingDoc@SoldTo_P,83,ProjectionView,,SoldTo_P,,black
+84,Q_BillingDoc@Join_7,84,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SoldToParty', 'Cardinality': 'CN_1'}",Join_7,,black
+85,Q_BillingDoc@Payer_P,85,ProjectionView,,Payer_P,,black
+86,Q_BillingDoc@Join_8,86,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'PayerParty', 'Cardinality': 'CN_1'}",Join_8,,black
+87,Q_BillingDoc@Customer_P,87,ProjectionView,,Customer_P,,black
+88,Q_BillingDoc@Join_9,88,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_9,,black
+89,Q_BillingDoc@TIME_DIMENSION_P,89,ProjectionView,,TIME_DIMENSION_P,,black
+90,Q_BillingDoc@Join_10,90,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'InvoiceListBillingDate', 'Cardinality': 'CN_1'}",Join_10,,black
+91,Q_BillingDoc@Semantics,91,Semantics,,Semantics,,black
+92,Q_CreditMemo@BillingHdr_P,92,ProjectionView,,BillingHdr_P,"""SDDocumentCategory""='O'",dodgerblue
+93,Q_CreditMemo@BillingItem_P,93,ProjectionView,,BillingItem_P,,black
+94,Q_CreditMemo@Join_1,94,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'BillingDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+95,Q_CreditMemo@SalesOrg_P,95,ProjectionView,,SalesOrg_P,,black
+96,Q_CreditMemo@Join_2,96,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrganization', 'Cardinality': 'CN_1'}",Join_2,,black
+97,Q_CreditMemo@Material_P,97,ProjectionView,,Material_P,,black
+98,Q_CreditMemo@Join_3,98,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+99,Q_CreditMemo@Join_4,99,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+100,Q_CreditMemo@Projection_1,100,ProjectionView,,Projection_1,,black
+101,Q_CreditMemo@COMPCODE_P,101,ProjectionView,,COMPCODE_P,,black
+102,Q_CreditMemo@Join_5,102,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_5,,black
+103,Q_CreditMemo@BillingCategory_P,103,ProjectionView,,BillingCategory_P,,black
+104,Q_CreditMemo@Join_6,104,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'BillingDocumentCategory', 'Cardinality': 'CN_1'}",Join_6,,black
+105,Q_CreditMemo@SoldTo_P,105,ProjectionView,,SoldTo_P,,black
+106,Q_CreditMemo@Join_7,106,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SoldToParty', 'Cardinality': 'CN_1'}",Join_7,,black
+107,Q_CreditMemo@Payer_P,107,ProjectionView,,Payer_P,,black
+108,Q_CreditMemo@Join_8,108,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'PayerParty', 'Cardinality': 'CN_1'}",Join_8,,black
+109,Q_CreditMemo@Customer_P,109,ProjectionView,,Customer_P,,black
+110,Q_CreditMemo@Join_9,110,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_9,,black
+111,Q_CreditMemo@TIME_DIMENSION_P,111,ProjectionView,,TIME_DIMENSION_P,,black
+112,Q_CreditMemo@Join_10,112,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'InvoiceListBillingDate', 'Cardinality': 'CN_1'}",Join_10,,black
+113,Q_CreditMemo@Semantics,113,Semantics,,Semantics,,black
+114,Q_CreditRatio@BillingHdr_P,114,ProjectionView,,BillingHdr_P,,black
+115,Q_CreditRatio@BillingItem_P,115,ProjectionView,,BillingItem_P,,black
+116,Q_CreditRatio@Join_1,116,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'BillingDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+117,Q_CreditRatio@SalesOrg_P,117,ProjectionView,,SalesOrg_P,,black
+118,Q_CreditRatio@Join_2,118,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrganization', 'Cardinality': 'CN_1'}",Join_2,,black
+119,Q_CreditRatio@Material_P,119,ProjectionView,,Material_P,,black
+120,Q_CreditRatio@Join_3,120,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+121,Q_CreditRatio@Join_4,121,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+122,Q_CreditRatio@Projection_1,122,ProjectionView,,Projection_1,,black
+123,Q_CreditRatio@COMPCODE_P,123,ProjectionView,,COMPCODE_P,,black
+124,Q_CreditRatio@Join_5,124,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_5,,black
+125,Q_CreditRatio@BillingCategory_P,125,ProjectionView,,BillingCategory_P,,black
+126,Q_CreditRatio@Join_6,126,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'BillingDocumentCategory', 'Cardinality': 'CN_1'}",Join_6,,black
+127,Q_CreditRatio@SoldTo_P,127,ProjectionView,,SoldTo_P,,black
+128,Q_CreditRatio@Join_7,128,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SoldToParty', 'Cardinality': 'CN_1'}",Join_7,,black
+129,Q_CreditRatio@Payer_P,129,ProjectionView,,Payer_P,,black
+130,Q_CreditRatio@Join_8,130,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'PayerParty', 'Cardinality': 'CN_1'}",Join_8,,black
+131,Q_CreditRatio@Customer_P,131,ProjectionView,,Customer_P,,black
+132,Q_CreditRatio@Join_9,132,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_9,,black
+133,Q_CreditRatio@TIME_DIMENSION_P,133,ProjectionView,,TIME_DIMENSION_P,,black
+134,Q_CreditRatio@Join_10,134,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'InvoiceListBillingDate', 'Cardinality': 'CN_1'}",Join_10,,black
+135,Q_CreditRatio@Semantics,135,Semantics,,Semantics,,black
+136,ACCOUNT_GRP_TEXT,136,DataSources,,ACCOUNT_GRP_TEXT,,black
+137,CUST_COMPC_ATTR,137,DataSources,,CUST_COMPC_ATTR,,black
+138,Q_CustomerMasterList@Projection_1,138,ProjectionView,,Projection_1,,black
+139,Q_CustomerMasterList@Projection_2,139,ProjectionView,,Projection_2,,black
+140,Q_CustomerMasterList@Join_1,140,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'CustomerNumber', 'Cardinality': 'CN_N'}",Join_1,,black
+141,Q_CustomerMasterList@Projection_3,141,ProjectionView,,Projection_3,,black
+142,Q_CustomerMasterList@Join_4,142,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'CountryKey', 'Cardinality': 'CN_N'}",Join_4,,black
+143,Q_CustomerMasterList@Projection_4,143,ProjectionView,,Projection_4,,black
+144,Q_CustomerMasterList@Join_5,144,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'CustomerAccountGroup', 'Cardinality': 'CN_N'}",Join_5,,black
+145,Q_CustomerMasterList@Projection_5,145,ProjectionView,,Projection_5,,black
+146,Q_CustomerMasterList@Join_6,146,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CustomerNumber', 'Cardinality': 'C1_N'}",Join_6,,black
+147,Q_CustomerMasterList@Projection_6,147,ProjectionView,,Projection_6,,black
+148,Q_CustomerMasterList@Join_7,148,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'C1_1'}",Join_7,,black
+149,Q_CustomerMasterList@Semantics,149,Semantics,,Semantics,,black
+150,MATERIAL_MOVEMENTS,150,DataSources,,MATERIAL_MOVEMENTS,,black
+151,Q_Material,151,DataSources,,Q_Material,,black
+152,PLANT_TEXT,152,DataSources,,PLANT_TEXT,,black
+153,Q_GoodsReceiptsGoodsIssues@Projection_1,153,ProjectionView,,Projection_1,"in(""BWART"",'101','102','261','262')",dodgerblue
+154,Q_GoodsReceiptsGoodsIssues@Projection_2,154,ProjectionView,,Projection_2,,black
+155,Q_GoodsReceiptsGoodsIssues@Join_1,155,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialNumber', 'Cardinality': 'C1_1'}",Join_1,,black
+156,Q_GoodsReceiptsGoodsIssues@Projection_3,156,ProjectionView,,Projection_3,,black
+157,Q_GoodsReceiptsGoodsIssues@Join_2,157,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Plant', 'Cardinality': 'C1_1'}",Join_2,,black
+158,Q_GoodsReceiptsGoodsIssues@Projection_4,158,ProjectionView,,Projection_4,,black
+159,Q_GoodsReceiptsGoodsIssues@Join_3,159,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'C1_1'}",Join_3,,black
+160,Q_GoodsReceiptsGoodsIssues@Semantics,160,Semantics,,Semantics,,black
+161,Q_Material@Material_P,161,ProjectionView,,Material_P,,black
+162,Q_Material@MatGroupTxt_P,162,ProjectionView,,MatGroupTxt_P,,black
+163,Q_Material@Join_1,163,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'C1_1'}",Join_1,,black
+164,Q_Material@Semantics,164,Semantics,,Semantics,,black
+165,PURCHASING_DOC_HDR,165,DataSources,,PURCHASING_DOC_HDR,,black
+166,PURCHASING_DOC_ITM,166,DataSources,,PURCHASING_DOC_ITM,,black
+167,STOR_LOC_TEXT,167,DataSources,,STOR_LOC_TEXT,,black
+168,Q_PurchaseOrderDetails@Projection_1,168,ProjectionView,,Projection_1,,black
+169,Q_PurchaseOrderDetails@Projection_2,169,ProjectionView,,Projection_2,,black
+170,Q_PurchaseOrderDetails@Join_1,170,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'JOIN$EBELN$PurchasingDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+171,Q_PurchaseOrderDetails@Projection_3,171,ProjectionView,,Projection_3,,black
+172,Q_PurchaseOrderDetails@Join_2,172,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialNumber', 'Cardinality': 'C1_1'}",Join_2,,black
+173,Q_PurchaseOrderDetails@Projection_4,173,ProjectionView,,Projection_4,,black
+174,Q_PurchaseOrderDetails@Join_3,174,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Vendor', 'Cardinality': 'C1_1'}",Join_3,,black
+175,Q_PurchaseOrderDetails@Projection_5,175,ProjectionView,,Projection_5,,black
+176,Q_PurchaseOrderDetails@Join_4,176,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Plant', 'Cardinality': 'C1_1'}",Join_4,,black
+177,Q_PurchaseOrderDetails@Projection_6,177,ProjectionView,,Projection_6,,black
+178,Q_PurchaseOrderDetails@Join_5,178,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Multiple', 'Cardinality': 'C1_1'}",Join_5,,black
+179,Q_PurchaseOrderDetails@Semantics,179,Semantics,,Semantics,,black
+180,SALES_DOC_HDR,180,DataSources,,SALES_DOC_HDR,,black
+181,SALES_DOC_ITEM,181,DataSources,,SALES_DOC_ITEM,,black
+182,DOC_TYPE_TEXT,182,DataSources,,DOC_TYPE_TEXT,,black
+183,Q_ReturnAnalysis@SO_HDR_P,183,ProjectionView,,SO_HDR_P,"""VBTYP""='H'",dodgerblue
+184,Q_ReturnAnalysis@SO_ITM_P,184,ProjectionView,,SO_ITM_P,"""VBTYP""='H'",dodgerblue
+185,Q_ReturnAnalysis@Join_1,185,JoinView,"{'JoinType': 'referential', 'JoinVariable': 'JOIN$VBELN$SalesDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+186,Q_ReturnAnalysis@Projection_3,186,ProjectionView,,Projection_3,,black
+187,Q_ReturnAnalysis@Join_2,187,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_2,,black
+188,Q_ReturnAnalysis@Join_3,188,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+189,Q_ReturnAnalysis@Projection_4,189,ProjectionView,,Projection_4,"""SPRAS""='E'",dodgerblue
+190,Q_ReturnAnalysis@Join_4,190,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+191,Q_ReturnAnalysis@Projection_5,191,ProjectionView,,Projection_5,"""SPRAS""='E'",dodgerblue
+192,Q_ReturnAnalysis@Projection_7,192,ProjectionView,,Projection_7,,black
+193,Q_ReturnAnalysis@Join_6,193,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_6,,black
+194,Q_ReturnAnalysis@Projection_8,194,ProjectionView,,Projection_8,"""SPRAS""='E'",dodgerblue
+195,Q_ReturnAnalysis@Join_7,195,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Country', 'Cardinality': 'CN_1'}",Join_7,,black
+196,Q_ReturnAnalysis@Projection_9,196,ProjectionView,,Projection_9,"""LANGU""='E'",dodgerblue
+197,Q_ReturnAnalysis@Join_8,197,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_8,,black
+198,Q_ReturnAnalysis@Projection_10,198,ProjectionView,,Projection_10,"""SPRAS""='E'",dodgerblue
+199,Q_ReturnAnalysis@Join_9,199,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrg', 'Cardinality': 'CN_1'}",Join_9,,black
+200,Q_ReturnAnalysis@Projection_11,200,ProjectionView,,Projection_11,,black
+201,Q_ReturnAnalysis@Join_10,201,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CreationDate', 'Cardinality': 'CN_1'}",Join_10,,black
+202,Q_ReturnAnalysis@Projection_12,202,ProjectionView,,Projection_12,"""SPRAS""='E'",dodgerblue
+203,Q_ReturnAnalysis@Join_11,203,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesDocType', 'Cardinality': 'CN_1'}",Join_11,,black
+204,Q_ReturnAnalysis@Semantics,204,Semantics,,Semantics,,black
+205,DELIVERY_HEADER,205,DataSources,,DELIVERY_HEADER,,black
+206,DELIVERY_ITEM,206,DataSources,,DELIVERY_ITEM,,black
+207,Q_Sales_Deliveries_List@Projection_1,207,ProjectionView,,Projection_1,,black
+208,Q_Sales_Deliveries_List@Projection_2,208,ProjectionView,,Projection_2,,black
+209,Q_Sales_Deliveries_List@Join_1,209,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'JOIN$VBELN$Delivery', 'Cardinality': 'CN_N'}",Join_1,,black
+210,Q_Sales_Deliveries_List@Projection_3,210,ProjectionView,,Projection_3,,black
+211,Q_Sales_Deliveries_List@Join_2,211,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Sold-toparty', 'Cardinality': 'CN_N'}",Join_2,,black
+212,Q_Sales_Deliveries_List@Join_3,212,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Ship-toparty', 'Cardinality': 'CN_N'}",Join_3,,black
+213,Q_Sales_Deliveries_List@Projection_4,213,ProjectionView,,Projection_4,,black
+214,Q_Sales_Deliveries_List@Join_4,214,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_N'}",Join_4,,black
+215,Q_Sales_Deliveries_List@Projection_5,215,ProjectionView,,Projection_5,"""SPRAS""='E'",dodgerblue
+216,Q_Sales_Deliveries_List@Join_5,216,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Salesorganization', 'Cardinality': 'CN_N'}",Join_5,,black
+217,Q_Sales_Deliveries_List@Semantics,217,Semantics,,Semantics,,black
+218,SALES_DOC_ORDER_DELIVERY,218,DataSources,,SALES_DOC_ORDER_DELIVERY,,black
+219,Q_SalesOrderfulfillment@SO_HDR_P,219,ProjectionView,,SO_HDR_P,,black
+220,Q_SalesOrderfulfillment@SO_ITM_P,220,ProjectionView,,SO_ITM_P,,black
+221,Q_SalesOrderfulfillment@Join_1,221,JoinView,"{'JoinType': 'referential', 'JoinVariable': 'JOIN$VBELN$SalesDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+222,Q_SalesOrderfulfillment@Projection_3,222,ProjectionView,,Projection_3,,black
+223,Q_SalesOrderfulfillment@Join_2,223,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_2,,black
+224,Q_SalesOrderfulfillment@Join_3,224,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+225,Q_SalesOrderfulfillment@Projection_4,225,ProjectionView,,Projection_4,"""SPRAS""='E'",dodgerblue
+226,Q_SalesOrderfulfillment@Join_4,226,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+227,Q_SalesOrderfulfillment@Projection_5,227,ProjectionView,,Projection_5,"""SPRAS""='E'",dodgerblue
+228,Q_SalesOrderfulfillment@Projection_7,228,ProjectionView,,Projection_7,,black
+229,Q_SalesOrderfulfillment@Join_6,229,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_6,,black
+230,Q_SalesOrderfulfillment@Projection_8,230,ProjectionView,,Projection_8,"""SPRAS""='E'",dodgerblue
+231,Q_SalesOrderfulfillment@Join_7,231,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Country', 'Cardinality': 'CN_1'}",Join_7,,black
+232,Q_SalesOrderfulfillment@Projection_9,232,ProjectionView,,Projection_9,"""LANGU""='E'",dodgerblue
+233,Q_SalesOrderfulfillment@Join_8,233,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'CN_1'}",Join_8,,black
+234,Q_SalesOrderfulfillment@Projection_10,234,ProjectionView,,Projection_10,"""SPRAS""='E'",dodgerblue
+235,Q_SalesOrderfulfillment@Join_9,235,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrg', 'Cardinality': 'CN_1'}",Join_9,,black
+236,Q_SalesOrderfulfillment@Projection_11,236,ProjectionView,,Projection_11,,black
+237,Q_SalesOrderfulfillment@Join_10,237,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CreationDate', 'Cardinality': 'CN_1'}",Join_10,,black
+238,Q_SalesOrderfulfillment@Projection_12,238,ProjectionView,,Projection_12,"""SPRAS""='E'",dodgerblue
+239,Q_SalesOrderfulfillment@Join_11,239,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesDocType', 'Cardinality': 'CN_1'}",Join_11,,black
+240,Q_SalesOrderfulfillment@Projection_13,240,ProjectionView,,Projection_13,,black
+241,Q_SalesOrderfulfillment@Join_12,241,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Multiple', 'Cardinality': 'CN_1'}",Join_12,,black
+242,Q_SalesOrderfulfillment@Semantics,242,Semantics,,Semantics,,black
+243,Q_SalesOrderListItems@Projection_1,243,ProjectionView,,Projection_1,"(""DocYear"">='$$IP_DocumentYearFrom$$' and ""DocYear""<='$$IP_DocumentYearTO$$')",dodgerblue
+244,Q_SalesOrderListItems@Projection_2,244,ProjectionView,,Projection_2,,black
+245,Q_SalesOrderListItems@Join_1,245,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'JOIN$VBELN$SalesDocument', 'Cardinality': 'CN_1'}",Join_1,,black
+246,Q_SalesOrderListItems@Projection_3,246,ProjectionView,,Projection_3,,black
+247,Q_SalesOrderListItems@Join_2,247,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_2,,black
+248,Q_SalesOrderListItems@Join_3,248,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_3,,black
+249,Q_SalesOrderListItems@Projection_4,249,ProjectionView,,Projection_4,"""SPRAS""='E'",dodgerblue
+250,Q_SalesOrderListItems@Join_4,250,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'MaterialGroup', 'Cardinality': 'CN_1'}",Join_4,,black
+251,Q_SalesOrderListItems@Projection_5,251,ProjectionView,,Projection_5,"""SPRAS""='E'",dodgerblue
+252,Q_SalesOrderListItems@Projection_7,252,ProjectionView,,Projection_7,,black
+253,Q_SalesOrderListItems@Join_6,253,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Customer', 'Cardinality': 'CN_1'}",Join_6,,black
+254,Q_SalesOrderListItems@Projection_8,254,ProjectionView,,Projection_8,"""SPRAS""='E'",dodgerblue
+255,Q_SalesOrderListItems@Join_7,255,JoinView,"{'JoinType': 'textTable', 'JoinVariable': 'Country', 'Cardinality': 'CN_1'}",Join_7,,black
+256,Q_SalesOrderListItems@Projection_9,256,ProjectionView,,Projection_9,,black
+257,Q_SalesOrderListItems@Join_8,257,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CompanyCode', 'Cardinality': 'C1_1'}",Join_8,,black
+258,Q_SalesOrderListItems@Projection_10,258,ProjectionView,,Projection_10,"""SPRAS""='E'",dodgerblue
+259,Q_SalesOrderListItems@Join_9,259,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesOrg', 'Cardinality': 'CN_1'}",Join_9,,black
+260,Q_SalesOrderListItems@Projection_11,260,ProjectionView,,Projection_11,,black
+261,Q_SalesOrderListItems@Join_10,261,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'CreationDate', 'Cardinality': 'CN_1'}",Join_10,,black
+262,Q_SalesOrderListItems@Projection_12,262,ProjectionView,,Projection_12,"""SPRAS""='E'",dodgerblue
+263,Q_SalesOrderListItems@Join_11,263,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'SalesDocType', 'Cardinality': 'CN_1'}",Join_11,,black
+264,Q_SalesOrderListItems@IP_DocumentYearFrom,264,Local_variable,,IP_DocumentYearFrom,,black
+265,Q_SalesOrderListItems@IP_DocumentYearTO,265,Local_variable,,IP_DocumentYearTO,,black
+266,Q_SalesOrderListItems@Semantics,266,Semantics,,Semantics,,black
+267,Q_SalesOrderListItems,267,DataSources,,Q_SalesOrderListItems,,black
+268,SALES_DOC_SCH_LINE,268,DataSources,,SALES_DOC_SCH_LINE,,black
+269,Q_SalesOrderScheduling@Projection_1,269,ProjectionView,,Projection_1,,black
+270,Q_SalesOrderScheduling@Projection_2,270,ProjectionView,,Projection_2,,black
+271,Q_SalesOrderScheduling@Join_1,271,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'Multiple', 'Cardinality': 'CN_N'}",Join_1,,black
+272,Q_SalesOrderScheduling@Projection_3,272,ProjectionView,,Projection_3,,black
+273,Q_SalesOrderScheduling@Join_2,273,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Bill-to-party', 'Cardinality': 'CN_N'}",Join_2,,black
+274,Q_SalesOrderScheduling@Join_3,274,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Payer', 'Cardinality': 'CN_1'}",Join_3,,black
+275,Q_SalesOrderScheduling@Join_4,275,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Ship-to-Party', 'Cardinality': 'CN_1'}",Join_4,,black
+276,Q_SalesOrderScheduling@IP_DocumentYearFrom,276,Local_variable,,IP_DocumentYearFrom,,black
+277,Q_SalesOrderScheduling@IP_DocumentYearTO,277,Local_variable,,IP_DocumentYearTO,,black
+278,Q_SalesOrderScheduling@Semantics,278,Semantics,,Semantics,,black
+279,MATERIAL_STOCK,279,DataSources,,MATERIAL_STOCK,,black
+280,Q_VendorMasterList,280,DataSources,,Q_VendorMasterList,,black
+281,Q_StockOverview@Projection_1,281,ProjectionView,,Projection_1,,black
+282,Q_StockOverview@Projection_2,282,ProjectionView,,Projection_2,,black
+283,Q_StockOverview@Join_1,283,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Material', 'Cardinality': 'CN_1'}",Join_1,,black
+284,Q_StockOverview@Projection_3,284,ProjectionView,,Projection_3,,black
+285,Q_StockOverview@Join_2,285,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Vendor', 'Cardinality': 'C1_1'}",Join_2,,black
+286,Q_StockOverview@Join_3,286,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'Multiple', 'Cardinality': 'C1_1'}",Join_3,,black
+287,Q_StockOverview@Projection_4,287,ProjectionView,,Projection_4,,black
+288,Q_StockOverview@Join_4,288,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'Plant', 'Cardinality': 'CN_N'}",Join_4,,black
+289,Q_StockOverview@Projection_5,289,ProjectionView,,Projection_5,,black
+290,Q_StockOverview@Semantics,290,Semantics,,Semantics,,black
+291,VENDOR_ATTR,291,DataSources,,VENDOR_ATTR,,black
+292,VEN_ACCNT_GRP_TEXT,292,DataSources,,VEN_ACCNT_GRP_TEXT,,black
+293,VEN_COMPC_ATTR,293,DataSources,,VEN_COMPC_ATTR,,black
+294,Q_VendorMasterList@Projection_1,294,ProjectionView,,Projection_1,,black
+295,Q_VendorMasterList@Projection_2,295,ProjectionView,,Projection_2,,black
+296,Q_VendorMasterList@Join_1,296,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'VendorNO', 'Cardinality': 'CN_N'}",Join_1,,black
+297,Q_VendorMasterList@Projection_3,297,ProjectionView,,Projection_3,"""SPRAS""='E'",dodgerblue
+298,Q_VendorMasterList@Join_2,298,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'VendorAccountGroup', 'Cardinality': 'CN_N'}",Join_2,,black
+299,Q_VendorMasterList@Projection_4,299,ProjectionView,,Projection_4,,black
+300,Q_VendorMasterList@Join_3,300,JoinView,"{'JoinType': 'inner', 'JoinVariable': 'VendorNO', 'Cardinality': 'CN_N'}",Join_3,,black
+301,Q_VendorMasterList@Projection_5,301,ProjectionView,,Projection_5,"""SPRAS""='E'",dodgerblue
+302,Q_VendorMasterList@Join_4,302,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'VendorCountry', 'Cardinality': 'C1_1'}",Join_4,,black
+303,Q_VendorMasterList@Projection_6,303,ProjectionView,,Projection_6,,black
+304,Q_VendorMasterList@Join_5,304,JoinView,"{'JoinType': 'leftOuter', 'JoinVariable': 'VendorCompanyCode', 'Cardinality': 'C1_N'}",Join_5,,black
+305,Q_VendorMasterList@Semantics,305,Semantics,,Semantics,,black
