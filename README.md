@@ -1,6 +1,6 @@
 # SankeyApp
 
-**SankeyApp** is a Python application for visualizing Sankey diagrams using Flask and Plotly. This application allows users to interactively explore data flow and relationships through Sankey diagrams.
+**SankeyApp** is a Python application for visualizing Sankey diagrams of data flows using Flask and Plotly. This application allows users to interactively explore data flow and relationships through Sankey diagrams, either on the file level or table-column level.
 
 ## Features
 
@@ -38,13 +38,44 @@
     pip install -e .
     ```
 
+## Usage
+
+1. **Run the application:**
+
+    ```bash
+    python sankeyapp.app
+    ```
+
+    This command starts the Flask development server and makes the application accessible at `http://127.0.0.1:5000/` by default.
+
+    To run the application from a Python file:
+
+   
+    ```python
+    from sankeyapp.app import main 
+    
+    main(lineages_path, nodes_path) # e.g.: main('output-data/lineages/', 'output-data/nodes.csv') 
+    ```
+
+3. **Access the web interface:**
+
+    Open your web browser and navigate to `http://127.0.0.1:5000/` to interact with the application.
+
+4. **Interact with Sankey diagrams:**
+
+    - Use the menu to select different data sources for the Sankey diagrams.
+    - Use checkboxes to toggle different visualization options (e.g., stacked view).
+  
 ## Configuration
 
 ### Data Files
 
 #### Lineages Data
 
-The lineages data file should be a CSV file with the following columns:
+The lineages data path should reference a folder with lineage CSV datasets (one for each of the files), they contain all the information regarding the lineages of the Sankey grap. 
+These datasets represent the flow on the column-level.
+The CSV files are named **lineage-nameoffile.csv**.
+Each CSV file with the following columns:
 
 
 - **`SOURCE_FIELD`**: 
@@ -82,7 +113,10 @@ The lineages data file should be a CSV file with the following columns:
 
 #### Nodes Data
 
-The nodes data is contained in one dataset, it contains all the information regarding the nodes of the lineages
+The nodes data path references one dataset, it contains all the information regarding the nodes of the Sankey graph. 
+These datasets represent the flow on the table-level.
+The nodes data contains the following columns:
+
 
 - **`LABEL_NODE`**: 
   - **Description**: The name of the node within the data model.
@@ -123,22 +157,4 @@ The nodes data is contained in one dataset, it contains all the information rega
 
 
 
-## Usage
-
-1. **Run the application:**
-
-    ```bash
-    python sankeyapp.app
-    ```
-
-    This command starts the Flask development server and makes the application accessible at `http://127.0.0.1:5000/` by default.
-
-2. **Access the web interface:**
-
-    Open your web browser and navigate to `http://127.0.0.1:5000/` to interact with the application.
-
-3. **Interact with Sankey diagrams:**
-
-    - Use the menu to select different data sources for the Sankey diagrams.
-    - Use checkboxes to toggle different visualization options (e.g., stacked view).
 
