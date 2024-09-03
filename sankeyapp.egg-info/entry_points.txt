@@ -1,0 +1,2 @@
+[console_scripts]
+sankeyapp = sankeyapp.app:main

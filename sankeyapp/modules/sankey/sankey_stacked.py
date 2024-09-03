@@ -1,10 +1,15 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-def sankey_stacked(lineages_path:str, nodes_path:str):
+#def sankey_stacked(lineages_path:str, nodes_path:str):
     
-    df = pd.read_csv(lineages_path)
-    df_labels = pd.read_csv(nodes_path)
+#    df = pd.read_csv(lineages_path)
+#    df_labels = pd.read_csv(nodes_path)
+
+def sankey_stacked(stacked_lineages:pd.DataFrame, stacked_nodes:pd.DataFrame):
+    
+    df = stacked_lineages.copy()
+    df_labels = stacked_nodes.copy()
 
     df = df.rename(columns = {"CALC_VIEW" : "TARGET_FIELD", 'SOURCE' : 'SOURCE_FIELD', "CALC_ID" : "TARGET_NODE", "SOURCE_ID" : "SOURCE_NODE"})
     df_labels = df_labels.rename(columns = {"Unnamed: 0" : "LABEL_NODE"})
