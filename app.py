@@ -1,74 +1,79 @@
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request
 import plotly.graph_objs as go
 from modules.sankey import sankey_plot
 from modules.sankey import sankey_stacked
 import plotly
 import json
-import pandas as pd
 import os
 
 app = Flask(__name__)
 
+class SankeyApp:
+    def __init__(self, lineages_path, nodes_path):
+        self.lineages_path = lineages_path
+        self.nodes_path = nodes_path
 
+    def get_files(self):
+        """
+        Function that returns a list of files available as options on the Flask frontend
+        """
+        list_files = os.listdir(self.lineages_path)
+        options = []
 
+        # Iterate over each file name and extract the string as needed
+        for file_name in list_files:
+            if '-' in file_name:
+                extracted_string = file_name.split('-')[1].split('.')[0]
+                options.append(extracted_string)
+            else:
+                extracted_string = file_name#.split('-')[1].split('.')[0]
+                options.append(extracted_string)
 
-def get_files(path):
-    """
-    Function that returns a list of files available as option on the Flask frontend
-    """
-    list_files = os.listdir(path)
-    # Initialize empty lists to store extracted substrings
-    options = []
-    
-    # Iterate over each file name
-    for file_name in list_files:
-        # Split the file name by '-' and get the second part (after the '-')
-        extracted_string = file_name.split('-')[1]
-        # Remove the file extension (.csv) by splitting again and taking the first part
-        extracted_string = extracted_string.split('.')[0]
-       
-
-        # Append the extracted substring to the list
-        options.append(extracted_string)
-        try:
+        # Remove 'merged' from options if it exists
+        if 'merged' in options:
             options.remove('merged')
-        except:
-            pass
-    return options
 
+        return options
 
+    def create_routes(self):
+        """
+        Defines the routes using Flask's app decorator
+        """
 
+        @app.route('/', methods=['GET', 'POST'])
+        def index():
+            options = self.get_files()  # Get the file options
+            print(options)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+            if request.method == 'GET':
+                # On GET, render a default Sankey plot
+                a = sankey_plot.draw_sankey([options[0]], self.lineages_path, self.nodes_path)
+                plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
 
-    lineages_path = app.config.get('LINEAGES_PATH', 'output-tables-ssis/lineages/')
-    nodes_path = app.config.get('NODES_PATH', 'output-tables-ssis/nodes.csv')
+            if request.method == 'POST':
+                # Handle form submission
+                selected_options = request.form.getlist('option')
+                stacked_overview_checked = 'stackedOverview' in request.form
 
-    options = get_files(lineages_path)
-    
-    if request.method == 'GET':
-        a = sankey_plot.draw_sankey([options[0]], lineages_path, nodes_path)
-        plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
-        
-    if request.method == 'POST':
-        selected_options = request.form.getlist('option')
-        stacked_overview_checked = 'stackedOverview' in request.form
-        if stacked_overview_checked:
-            a = sankey_stacked.sankey_stacked("output-tables-sql/analysis/lineage_calc_source.csv", 'output-tables-sql/analysis/nodes_calc_source.csv')
-            plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
-        else:
-            print(selected_options)
-            print(lineages_path)
-            a = sankey_plot.draw_sankey(selected_options, lineages_path, nodes_path)
-            plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
-    form_width = 270
+                if stacked_overview_checked:
+                    # If stacked overview is checked, render stacked Sankey plot
+                    a = sankey_stacked.sankey_stacked("output-tables-sql/analysis/lineage_calc_source.csv", 'output-tables-sql/analysis/nodes_calc_source.csv')
+                    plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
+                else:
+                    # Otherwise, render the selected Sankey plot
+                    a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path)
+                    plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
 
-    return render_template('index.html', options=options, graphJSON=plot_json, form_width=form_width)
+            form_width = 270
+            return render_template('index.html', options=options, graphJSON=plot_json, form_width=form_width)
 
 
 if __name__ == '__main__':
-
-    app.config['LINEAGES_PATH'] = 'output-tables-sql/lineages/'
-    app.config['NODES_PATH'] = 'output-tables-sql/nodes.csv'    
+    # Create the SankeyApp instance
+    sankey_app = SankeyApp('sample-data/output-tables-sap/lineages/', 'sample-data/output-tables-sap/nodes.csv')
+    
+    # Register the routes
+    sankey_app.create_routes()
+    
+    # Run the Flask app
     app.run(debug=True)
