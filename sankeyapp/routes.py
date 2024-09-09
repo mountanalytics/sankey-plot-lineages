@@ -33,6 +33,7 @@ class SankeyApp:
 
             if request.method == 'POST':
                 selected_options = request.form.getlist('option')
+                print(selected_options)
                 stacked_overview_checked = 'stackedOverview' in request.form
                 if stacked_overview_checked:
                     

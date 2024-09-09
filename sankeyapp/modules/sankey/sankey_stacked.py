@@ -11,10 +11,10 @@ def sankey_stacked(stacked_lineages:pd.DataFrame, stacked_nodes:pd.DataFrame):
     df = stacked_lineages.copy()
     df_labels = stacked_nodes.copy()
 
-    df = df.rename(columns = {"CALC_VIEW" : "TARGET_FIELD", 'SOURCE' : 'SOURCE_FIELD', "CALC_ID" : "TARGET_NODE", "SOURCE_ID" : "SOURCE_NODE"})
-    df_labels = df_labels.rename(columns = {"Unnamed: 0" : "LABEL_NODE"})
+    #df = df.rename(columns = {"CALC_VIEW" : "TARGET_FIELD", 'SOURCE' : 'SOURCE_FIELD', "CALC_ID" : "TARGET_NODE", "SOURCE_ID" : "SOURCE_NODE"})
+    #df_labels = df_labels.rename(columns = {"Unnamed: 0" : "LABEL_NODE"})
     
-    df['source_to_target'] = df[['SOURCE_FIELD', 'TARGET_FIELD']].agg('=>'.join, axis=1)
+    df['source_to_target'] = df[['Source', 'Target']].agg('=>'.join, axis=1)
     
     fig = go.Figure(data=[go.Sankey(
         node = dict(
@@ -32,8 +32,8 @@ def sankey_stacked(stacked_lineages:pd.DataFrame, stacked_nodes:pd.DataFrame):
           #arrowlen=15,
           line = dict(color = "blue", width = 0.05),
           hoverlabel = dict (font = dict(size=15) ),
-          source = df['SOURCE_NODE'], 
-          target = df['TARGET_NODE'],
+          source = df['SOURCE_ID'], 
+          target = df['TARGET_ID'],
           value = df['LINK_VALUE'],
           customdata = df['source_to_target'],
           hovertemplate='Details: %{customdata}',
@@ -44,5 +44,5 @@ def sankey_stacked(stacked_lineages:pd.DataFrame, stacked_nodes:pd.DataFrame):
       )])
     
     fig.update_layout(font_size=10)
-    fig.update_layout(title = dict(text="Data sources coupled to the calculation views", font_size=20))
+    fig.update_layout(title = dict(text="Data sources coupled to control nodes", font_size=20))
     return fig

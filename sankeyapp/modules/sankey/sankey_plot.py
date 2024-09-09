@@ -8,17 +8,17 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str):
     """
     if len(name) == 1: # if only one view
         df = pd.read_csv(f'{lineages_path}/lineage-{name[0]}.csv')
-        title = f"Sankey of calculationview: {name[0]}"
+        title = f"Sankey of control node: {name[0]}"
     else:
         lineage_list = []
         if len(name) == 2: # if 2 views
-            title = f"Sankey of merged calculationviews: {name[0]} and {name[1]}"
+            title = f"Sankey of merged control nodes: {name[0]} and {name[1]}"
         else: # if more than 2
-            title = "Sankey of multiple merged calculationviews"
+            title = "Sankey of multiple merged control nodes"
 
 
         for lins in name: 
-            lineage = pd.read_csv(f"{lineages_path}/{lins}")
+            lineage = pd.read_csv(f"{lineages_path}/lineage-{lins}.csv")
             lineage_list.append(lineage)
 
         df = pd.concat(lineage_list, ignore_index=True)
