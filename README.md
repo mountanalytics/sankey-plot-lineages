@@ -22,7 +22,7 @@
 
     ```bash
     git clone https://github.com/mountanalytics/sankey-plot-lineages.git
-    cd sankeyapp
+    cd sankey-plot-lineages
     ```
 
 2. **Create and activate a virtual environment:**
