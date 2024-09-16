@@ -8,9 +8,11 @@ import os
 
 
 class SankeyApp:
-    def __init__(self, lineages_path, nodes_path):
+    def __init__(self, lineages_path, nodes_path, merge_node, error_path):
         self.lineages_path = lineages_path
         self.nodes_path = nodes_path
+        self.merge_node = merge_node
+        self.error_path = error_path
 
     def get_files(self):
         """
@@ -28,13 +30,14 @@ class SankeyApp:
             options = self.get_files()
 
             if request.method == 'GET':
-                a = sankey_plot.draw_sankey([options[0]], self.lineages_path, self.nodes_path)
+                a = sankey_plot.draw_sankey([options[0]], self.lineages_path, self.nodes_path,self.error_path,"normal")
                 plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
 
             if request.method == 'POST':
                 selected_options = request.form.getlist('option')
                 print(selected_options)
                 stacked_overview_checked = 'stackedOverview' in request.form
+                mainline = 'Mainline' in request.form
                 if stacked_overview_checked:
                     
                     # get the stacked dataframes
@@ -44,8 +47,12 @@ class SankeyApp:
                     
                     #a = sankey_stacked.sankey_stacked("output-tables-sql/analysis/lineage_calc_source.csv", 'output-tables-sql/analysis/nodes_calc_source.csv')
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
+                elif mainline:
+                    sankey_plot.delete_error_inp(selected_options[0], self.lineages_path, self.nodes_path, self.merge_node, self.error_path) 
+                    a = sankey_plot.draw_sankey(selected_options, self.error_path, self.nodes_path,self.error_path,"del")
+                    plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
                 else:
-                    a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path)
+                    a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"normal")
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
 
             form_width = 270

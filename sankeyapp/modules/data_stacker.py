@@ -73,11 +73,12 @@ def stack_data(lineages_path, nodes_path):
     result_df = pd.DataFrame()
     
     for files in list_files:
-        # open lineage file
-        df = pd.read_csv(f"{lineages_path}/{files}")
-        source_target = source_target_tables(df, df_labels)
-        source_target["Calc_view"] = files.split(".")[0].split("-")[1]
-        result_df = pd.concat([result_df,source_target],ignore_index=True)
+        if files.endswith(".csv"):
+            # open lineage file
+            df = pd.read_csv(f"{lineages_path}/{files}")
+            source_target = source_target_tables(df, df_labels)
+            source_target["Calc_view"] = files.split(".")[0].split("-")[1]
+            result_df = pd.concat([result_df,source_target],ignore_index=True)
 
 
     nodes_source = list(np.unique(result_df['Calc_view']))

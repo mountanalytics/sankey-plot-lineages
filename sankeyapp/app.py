@@ -1,9 +1,9 @@
 from . import app
 from .routes import SankeyApp
 
-def main(lineages_path, nodes_path):
+def main(lineages_path, nodes_path, merge_node, error_path):
     # Initialize the SankeyApp
-    sankey_app = SankeyApp(lineages_path, nodes_path)
+    sankey_app = SankeyApp(lineages_path, nodes_path,merge_node, error_path)
     sankey_app.create_routes()
 
     # Run the Flask app
