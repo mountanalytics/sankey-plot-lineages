@@ -2,27 +2,59 @@ from flask import Flask, render_template, request
 import plotly.graph_objs as go
 import pandas as pd
 
-def draw_sankey(name:str, lineages_path:str, nodes_path:str):
+def delete_error_inp(package: str, path: str, node_path: str, order_node: str, error_path: str):
+    df_lin = pd.read_csv(f"{path}lineage-{package}.csv")
+    nodes = pd.read_csv(f"{node_path}")
+    df_order = pd.read_csv(f"{order_node}order_nodes-{package}.csv")
+    markers = pd.read_csv(f"{order_node}marker_nodes-{package}.csv")
+    
+    id_block_out_list = list(df_order["ID_block_out"])
+    
+    for marker in markers["NAME"]:
+        ref = marker
+        marked_nodes = []
+        marked_nodes.append(ref.split("\\")[1] + "@" + ref.split("\\")[2])
+        while ref in id_block_out_list:
+            idx = id_block_out_list.index(ref)  # Find the index of 'ref'
+            ref = df_order.at[idx, "ID_block_in"]
+            ref.split()
+            marked_nodes.append(ref.split("\\")[1] + "@" + ref.split("\\")[2])
+    
+    nodes["MARKER"] = 0
+    nodes["MARKER"] = nodes["LABEL_NODE"].isin(marked_nodes).astype(int)
+   
+    nodes_del = list(nodes[nodes["MARKER"] == 1]["ID"])
+    df_lin = df_lin[~df_lin["SOURCE_NODE"].isin(nodes_del) & ~df_lin["TARGET_NODE"].isin(nodes_del)]
+    df_lin.to_csv(f"{error_path}del-error-{package}.csv")
+    return
+
+
+
+
+def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, marks: str):
     """
     Dashboard logic
     """
-    if len(name) == 1: # if only one view
-        df = pd.read_csv(f'{lineages_path}/lineage-{name[0]}.csv')
+    if marks == "normal":
+        if len(name) == 1: # if only one view
+            df = pd.read_csv(f'{lineages_path}/lineage-{name[0]}.csv')
+            title = f"Sankey of control node: {name[0]}"
+        else:
+            lineage_list = []
+            if len(name) == 2: # if 2 views
+                title = f"Sankey of merged control nodes: {name[0]} and {name[1]}"
+            else: # if more than 2
+                title = "Sankey of multiple merged control nodes"
+
+
+            for lins in name: 
+                lineage = pd.read_csv(f"{lineages_path}/lineage-{lins}.csv")
+                lineage_list.append(lineage)
+
+            df = pd.concat(lineage_list, ignore_index=True)
+    elif marks == "del":
+        df = pd.read_csv(f'{error_path}/del-error-{name[0]}.csv')
         title = f"Sankey of control node: {name[0]}"
-    else:
-        lineage_list = []
-        if len(name) == 2: # if 2 views
-            title = f"Sankey of merged control nodes: {name[0]} and {name[1]}"
-        else: # if more than 2
-            title = "Sankey of multiple merged control nodes"
-
-
-        for lins in name: 
-            lineage = pd.read_csv(f"{lineages_path}/lineage-{lins}.csv")
-            lineage_list.append(lineage)
-
-        df = pd.concat(lineage_list, ignore_index=True)
-
 
     df_labels = pd.read_csv(nodes_path, sep = ',')
 
