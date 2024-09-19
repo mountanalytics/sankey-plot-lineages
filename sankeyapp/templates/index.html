@@ -46,12 +46,21 @@
 </head>
 <body>
     <form action="/" method="post">
-		<strong>Calculationviews:</strong><br>
+		<h3>Data views:</h3>
+		<strong>Control Flow:</strong><br>
 		{% for option in options %}
-			<input type="checkbox" name="option" value="{{ option }}"> {{ option }}<br>
+			{% if option.endswith('_cf') %}
+				<input type="checkbox" name="option" value="{{ option }}"> {{ option | replace('_cf', '') }}<br>
+			{% endif %}
 		{% endfor %}
-		<strong>Analysis:</strong><br>
-		<input type="checkbox" name="stackedOverview" value="Stacked Overview"> Stacked overview<br>
+		<strong>Data Flow:</strong><br>
+		{% for option in options %}
+			{% if not option.endswith('_cf') %}
+				<input type="checkbox" name="option" value="{{ option }}"> {{ option }}<br>
+			{% endif %}
+		{% endfor %}
+		<h3>Analysis:</h3>
+		<input type="checkbox" name="stackedOverview" value="Stacked Overview"> Connection external sources<br>
 		<input type="checkbox" name="Mainline" value="Delete Error nodes"> Delete error nodes<br>
 		<input type="submit" value="Submit">
 	</form>
@@ -61,6 +70,7 @@
         <span class="colorBox" style="background-color: #000000;"></span> <span style="vertical-align: middle;">Node</span><br>
 		<span class="colorBox" style="background-color: #FFD700;"></span> <span style="vertical-align: middle;">External table</span><br>
 		<span class="colorBox" style="background-color: #1E90FF;"></span> <span style="vertical-align: middle;">Join or split node</span><br>
+		<span class="colorBox" style="background-color: #9400D3;"></span> <span style="vertical-align: middle;">Filter node</span><br>
 		<span class="colorBox" style="background-color: #008000;"></span> <span style="vertical-align: middle;">Variable</span><br>
 		<span class="colorBox" style="background-color: #f0f8ff;"></span> <span style="vertical-align: middle;">Data transmission</span><br>
         <span class="colorBox" style="background-color: #ff4500;"></span> <span style="vertical-align: middle;">Transformation (existing column)</span><br>
