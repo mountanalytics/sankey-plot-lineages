@@ -93,9 +93,9 @@ def stack_data(lineages_path, nodes_path):
         if row in calc_views:
             print(row)
 
-            colors.append('lightblue')
-        else:
             colors.append('black')
+        else:
+            colors.append('gold')
 
     nodes_source['COLOR'] = colors
     nodes_source['CALC_ID'] = nodes_source.index    
