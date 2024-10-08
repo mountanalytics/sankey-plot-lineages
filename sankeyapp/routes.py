@@ -56,4 +56,5 @@ class SankeyApp:
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
 
             form_width = 270
+            a.write_html("file_sankey.html")
             return render_template('index.html', options=options, graphJSON=plot_json, form_width=form_width)
