@@ -28,14 +28,27 @@ def delete_error_inp(package: str, path: str, node_path: str, order_node: str, e
     df_lin.to_csv(f"{error_path}del-error-{package}.csv")
     return
 
-
-
+def hard_coded(node_path: str):
+    nodes = pd.read_csv(f"{node_path}")
+    block = list(nodes["NAME_NODE"])
+    for index, row in nodes.iterrows():
+        # Convert SPLIT_ARG and FILTER to strings to handle NaNs safely
+        split_arg_str = str(row["SPLIT_ARG"])
+        filter_str = str(row["FILTER"])
+        
+        # Check conditions
+        if (any(name in split_arg_str for name in block) or any(name in filter_str for name in block)) \
+        or (pd.isna(row["SPLIT_ARG"]) and pd.isna(row["FILTER"])):
+            nodes.at[index, "COLOR"] = "black"
+        elif pd.notna(row["SPLIT_ARG"]) or pd.notna(row["FILTER"]):
+            nodes.at[index, "COLOR"] = "red"
+    return nodes["COLOR"]
 
 def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, marks: str):
     """
     Dashboard logic
     """
-    if marks == "normal":
+    if marks == "normal" or marks == "hard_code":
         if len(name) == 1: # if only one view
             df = pd.read_csv(f'{lineages_path}/lineage-{name[0]}.csv')
             title = f"Sankey of control node: {name[0]}"
@@ -82,7 +95,8 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
         ,
         axis=1
     )
-
+    if marks == "hard_code":
+        df_labels["COLOR"] = hard_coded(nodes_path)
     fig = go.Figure(data=[go.Sankey(
         node = dict(
             pad = 20,

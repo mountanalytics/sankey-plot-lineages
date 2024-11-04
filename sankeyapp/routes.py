@@ -38,6 +38,7 @@ class SankeyApp:
                 print(selected_options)
                 stacked_overview_checked = 'stackedOverview' in request.form
                 mainline = 'Mainline' in request.form
+                hard_code = 'Hard_code' in request.form
                 if stacked_overview_checked:
                     
                     # get the stacked dataframes
@@ -50,6 +51,9 @@ class SankeyApp:
                 elif mainline:
                     sankey_plot.delete_error_inp(selected_options[0], self.lineages_path, self.nodes_path, self.merge_node, self.error_path) 
                     a = sankey_plot.draw_sankey(selected_options, self.error_path, self.nodes_path,self.error_path,"del")
+                    plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
+                elif hard_code:
+                    a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"hard_code")
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
                 else:
                     a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"normal")
