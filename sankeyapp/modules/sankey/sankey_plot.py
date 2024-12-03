@@ -79,12 +79,12 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
     )
 
 
-    transformation_columns = ['FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG']
+    transformation_columns = ['FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG', 'SORT', 'PIVOT']
     for col in transformation_columns:
         if col not in df_labels.columns:
             df_labels[col] = pd.NA
 
-    df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG']].apply(
+    df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG', 'SORT', 'PIVOT']].apply(
         lambda x: '{}{}'.format(
             x[0],
             f'<br />Filter: {x[1]}' if pd.notna(x[1]) else '') 
@@ -92,6 +92,8 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
         + (f'<br />Split Argument: {x[3]}' if pd.notna(x[3]) else '')
         + (f'<br />Where Argument: {x[4]}' if pd.notna(x[4]) else '')
         + (f'<br />On Argument: {x[5]}' if pd.notna(x[5]) else '')
+        + (f'<br />Sort Argument: {x[6]}' if pd.notna(x[6]) else '')
+        + (f'<br />Pivot Argument: {x[7]}' if pd.notna(x[7]) else '')
         ,
         axis=1
     )
