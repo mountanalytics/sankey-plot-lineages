@@ -91,8 +91,6 @@ def stack_data(lineages_path, nodes_path):
     for row in nodes_source['Name']:
         calc_views = list(result_df['Calc_view'])
         if row in calc_views:
-            print(row)
-
             colors.append('#D0D3D3')
         else:
             colors.append('#42D6A4')

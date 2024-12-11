@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import plotly.graph_objs as go
 import pandas as pd
+import re
 
 def delete_error_inp(package: str, path: str, node_path: str, order_node: str, error_path: str):
     df_lin = pd.read_csv(f"{path}lineage-{package}.csv")
@@ -44,6 +45,42 @@ def hard_coded(node_path: str):
             nodes.at[index, "COLOR"] = "red"
     return nodes["COLOR"]
 
+def format_hover_label_filter(filt: str) -> str: 
+    split_txt = filt.replace("(", "\n(\n").replace(")", "\n)\n").split("\n")
+    and_split = []
+    full_text = []
+    indent = 0
+    for text in split_txt:
+        text = text.strip(" ")
+        parts = re.split(r"(?i)\s+and\s+", text)
+        formatted_parts = [parts[0]] + [f"AND {part}" for part in parts[1:]]
+        and_split.extend(formatted_parts)
+    for text in and_split:
+        text = text.strip(" ")
+        if text == "(":
+            full_text.append("(")
+            indent += 1
+            continue  # Skip processing "(" as it does not need to be added to b
+        elif text == ")":
+            indent -= 1
+        if text.lower() == "and":
+            full_text.append("\t" * indent + "AND")
+        elif text.lower() == "or":
+            full_text.append("\t" * indent + "OR")
+        elif text.lower() == "where" or len(text) == 0:
+            pass
+        else:
+            parts = re.split(r"(?i)\s+or\s+", text)
+            formatted_parts = [parts[0]] + [f"OR {part}" for part in parts[1:]]
+            for part in formatted_parts:
+                full_text.append("\t" * indent + part.strip())
+    string_form = "<br />".join(full_text)
+    return string_form
+
+def format_hover_label_join(filt: str) -> str:
+    string_on = "<br />".join([s.strip(' ') for s in filt.strip("[").strip("]").split(",")])
+    return string_on
+
 def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, marks: str):
     """
     Dashboard logic
@@ -74,7 +111,7 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
     df['source_to_target'] = df[['SOURCE_FIELD', 'TARGET_FIELD']].agg('=>'.join, axis=1)
 
     df['source_to_target_transformation'] = df[['source_to_target', 'TRANSFORMATION']].apply(
-        lambda x: '{}<br />Transformation: {}'.format(x[0], x[1]) if pd.notna(x[1]) else x[0],
+        lambda x: '{}<br />Transformation: {}'.format(x.iloc[0], x.iloc[1]) if pd.notna(x.iloc[1]) else x.iloc[0],
         axis=1
     )
 
@@ -83,18 +120,15 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
     for col in transformation_columns:
         if col not in df_labels.columns:
             df_labels[col] = pd.NA
-
-    df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG', 'SORT', 'PIVOT', 'AGGREGATE']].apply(
+    df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'SORT', 'PIVOT', 'AGGREGATE']].apply(
         lambda x: '{}{}'.format(
-            x[0],
-            f'<br />Filter: {x[1]}' if pd.notna(x[1]) else '') 
-        + (f'<br />Join Argument: {x[2]}' if pd.notna(x[2]) else '') 
-        + (f'<br />Split Argument: {x[3]}' if pd.notna(x[3]) else '')
-        + (f'<br />Where Argument: {x[4]}' if pd.notna(x[4]) else '')
-        + (f'<br />On Argument: {x[5]}' if pd.notna(x[5]) else '')
-        + (f'<br />Sort Argument: {x[6]}' if pd.notna(x[6]) else '')
-        + (f'<br />Pivot Argument: {x[7]}' if pd.notna(x[7]) else '')
-        +(f'<br />Aggregate Arguments: {x[8]}' if pd.notna(x[8]) else '')
+            x.iloc[0],
+            f'<br />Filter: {format_hover_label_filter(x.iloc[1])}' if pd.notna(x.iloc[1]) else '') 
+        + (f'<br />Join Argument: {format_hover_label_join(x.iloc[2])}' if pd.notna(x.iloc[2]) else '') 
+        + (f'<br />Split Argument: {x.iloc[3]}' if pd.notna(x.iloc[3]) else '')
+        + (f'<br />Sort Argument:<br />{x.iloc[4]}' if pd.notna(x.iloc[4]) else '')
+        + (f'<br />Pivot Argument: {x.iloc[5]}' if pd.notna(x.iloc[5]) else '')
+        +(f'<br />Aggregate Arguments:<br />{x.iloc[6]}' if pd.notna(x.iloc[6]) else '')
         ,
         axis=1
     )
