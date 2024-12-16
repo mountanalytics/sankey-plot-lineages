@@ -122,13 +122,13 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
             df_labels[col] = pd.NA
     df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'SORT', 'PIVOT', 'AGGREGATE']].apply(
         lambda x: '{}{}'.format(
-            x.iloc[0],
-            f'<br />Filter: {format_hover_label_filter(x.iloc[1])}' if pd.notna(x.iloc[1]) else '') 
-        + (f'<br />Join Argument: {format_hover_label_join(x.iloc[2])}' if pd.notna(x.iloc[2]) else '') 
-        + (f'<br />Split Argument: {x.iloc[3]}' if pd.notna(x.iloc[3]) else '')
-        + (f'<br />Sort Argument:<br />{x.iloc[4]}' if pd.notna(x.iloc[4]) else '')
-        + (f'<br />Pivot Argument: {x.iloc[5]}' if pd.notna(x.iloc[5]) else '')
-        +(f'<br />Aggregate Arguments:<br />{x.iloc[6]}' if pd.notna(x.iloc[6]) else '')
+            f'<br /><b>{x.iloc[0]}</b><br />',
+            f'<br /><b>Filter:</b><br />{format_hover_label_filter(x.iloc[1])}' if pd.notna(x.iloc[1]) else '') 
+        + (f'<br /><b>Join Argument:</b><br />{format_hover_label_join(x.iloc[2])}' if pd.notna(x.iloc[2]) else '') 
+        + (f'<br /><b>Split Argument:</b><br />{x.iloc[3]}' if pd.notna(x.iloc[3]) else '')
+        + (f'<br /><b>Sort Argument:</b><br />{x.iloc[4]}' if pd.notna(x.iloc[4]) else '')
+        + (f'<br /><b>Pivot Argument:</b><br />{x.iloc[5]}' if pd.notna(x.iloc[5]) else '')
+        +(f'<br /><b>Aggregate Arguments:</b><br />{x.iloc[6]}' if pd.notna(x.iloc[6]) else '')
         ,
         axis=1
     )
