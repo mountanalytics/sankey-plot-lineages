@@ -46,19 +46,19 @@ def hard_coded(node_path: str):
     return nodes["COLOR"]
 
 def format_hover_label_filter(filt: str) -> str: 
-    split_txt = filt.replace("(", "\n(\n").replace(")", "\n)\n").split("\n")
+    split_txt = filt.replace("(", "\n(\n").replace(")", "\n)\n").replace('["WHERE', "").replace('"]', "").split("\n")
     and_split = []
     full_text = []
     indent = 0
     for text in split_txt:
-        text = text.strip(" ")
+        text = text.replace('", "', " ").strip(" ")
         parts = re.split(r"(?i)\s+and\s+", text)
         formatted_parts = [parts[0]] + [f"AND {part}" for part in parts[1:]]
         and_split.extend(formatted_parts)
     for text in and_split:
         text = text.strip(" ")
         if text == "(":
-            full_text.append("(")
+            full_text.append("    " * indent + "(") 
             indent += 1
             continue  # Skip processing "(" as it does not need to be added to b
         elif text == ")":
@@ -73,13 +73,46 @@ def format_hover_label_filter(filt: str) -> str:
             parts = re.split(r"(?i)\s+or\s+", text)
             formatted_parts = [parts[0]] + [f"OR {part}" for part in parts[1:]]
             for part in formatted_parts:
-                full_text.append("\t" * indent + part.strip())
+                full_text.append("    " * indent + part.strip())
     string_form = "<br />".join(full_text)
     return string_form
 
-def format_hover_label_join(filt: str) -> str:
-    string_on = "<br />".join([s.strip(' ') for s in filt.strip("[").strip("]").split(",")])
-    return string_on
+def format_hover_label_join(join_string: str) -> str:
+    join_string = re.sub(r'\b\s[Aa][Ss]\s+\w+', '', join_string)
+    join_string = re.sub(r'\)\s*[Aa][Ss]\s+\w+', ')', join_string)
+    sql_joins = [
+        "JOIN",
+        "INNER JOIN",
+        "LEFT JOIN",
+        "RIGHT JOIN",
+        "FULL JOIN",
+        "CROSS JOIN",
+        "NATURAL JOIN",
+        "SELF JOIN",
+        "ON",
+        "AND"
+    ]
+    join_pattern = r'(\b(?:' + '|'.join(re.escape(join) for join in sql_joins) + r')\b)'
+    def normalize_match(match):
+        return match.group(1).upper()
+    normalized_string = re.sub(join_pattern, normalize_match, join_string, flags=re.IGNORECASE)
+    split_result = re.split(join_pattern, normalized_string, flags=re.IGNORECASE)
+    
+    
+    
+    # Recombine into groups where each join is followed by its corresponding query part
+    recombined_list = []
+    current_part = split_result[0].strip()  # Start with the first part before any join
+    
+    for i in range(1, len(split_result), 2):  # Iterate over join statements and their following parts
+        join = split_result[i].strip().upper()  # Get the join statement and normalize to uppercase
+        next_part = split_result[i + 1].strip() if i + 1 < len(split_result) else ""  # Get the following part
+        recombined_list.append(f"{join} {next_part}")  # Combine the join and its part
+    
+    # Add the initial part (before the first join) back to the beginning of the list
+    if current_part:
+        recombined_list.insert(0, current_part)
+    return "<br />".join(recombined_list)
 
 def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, marks: str):
     """
