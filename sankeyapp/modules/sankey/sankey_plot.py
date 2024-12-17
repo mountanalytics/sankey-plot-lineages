@@ -78,6 +78,7 @@ def format_hover_label_filter(filt: str) -> str:
     return string_form
 
 def format_hover_label_join(join_string: str) -> str:
+    join_string = join_string.replace("['","").replace("']","").replace("', '"," ")
     join_string = re.sub(r'\b\s[Aa][Ss]\s+\w+', '', join_string)
     join_string = re.sub(r'\)\s*[Aa][Ss]\s+\w+', ')', join_string)
     sql_joins = [
