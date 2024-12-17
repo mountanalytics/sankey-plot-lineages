@@ -110,16 +110,18 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
 
     df['source_to_target'] = df[['SOURCE_FIELD', 'TARGET_FIELD']].agg('=>'.join, axis=1)
 
-    df['source_to_target_transformation'] = df[['source_to_target', 'TRANSFORMATION']].apply(
-        lambda x: '{}<br />Transformation: {}'.format(x.iloc[0], x.iloc[1]) if pd.notna(x.iloc[1]) else x.iloc[0],
-        axis=1
-    )
+    #df['source_to_target_transformation'] = df[['source_to_target', 'TRANSFORMATION']].apply(
+    #    lambda x: '{}<br />Transformation: {}'.format(x.iloc[0], x.iloc[1]) if pd.notna(x.iloc[1]) else x.iloc[0],
+    #    axis=1
+    #)
 
 
     transformation_columns = ['FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'WHERE_ARG', 'ON_ARG', 'SORT', 'PIVOT', 'AGGREGATE']
     for col in transformation_columns:
         if col not in df_labels.columns:
             df_labels[col] = pd.NA
+
+
     df_labels['hover_label'] = df_labels[['LABEL_NODE', 'FILTER', 'JOIN_ARG', 'SPLIT_ARG', 'SORT', 'PIVOT', 'AGGREGATE']].apply(
         lambda x: '{}{}'.format(
             f'<br /><b>{x.iloc[0]}</b><br />',
@@ -132,8 +134,12 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
         ,
         axis=1
     )
+
+
     if marks == "hard_code":
         df_labels["COLOR"] = hard_coded(nodes_path)
+
+
     fig = go.Figure(data=[go.Sankey(
         node = dict(
             pad = 20,
@@ -151,12 +157,10 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
         source = df['SOURCE_NODE'], # indices correspond to labels, eg A1, A2, A2, B1, ...
         target = df['TARGET_NODE'],
         value = df['LINK_VALUE'],
-        customdata = df['source_to_target_transformation'],
+        customdata = df['source_to_target'],
         hovertemplate='Details: %{customdata}',
         color = df['COLOR'],
-    ),
-    
-        
+    ),      
     )])
     fig.update_layout(font_size=10)
     fig.update_layout(title = dict(text=title, font_size=20))
