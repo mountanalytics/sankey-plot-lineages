@@ -39,6 +39,7 @@ class SankeyApp:
                 stacked_overview_checked = 'stackedOverview' in request.form
                 mainline = 'Mainline' in request.form
                 hard_code = 'Hard_code' in request.form
+                rat_score = 'Rat_score' in request.form
                 if stacked_overview_checked:
                     
                     # get the stacked dataframes
@@ -54,6 +55,9 @@ class SankeyApp:
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
                 elif hard_code:
                     a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"hard_code")
+                    plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
+                elif rat_score:
+                    a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"rat_score")
                     plot_json = json.dumps(a, cls=plotly.utils.PlotlyJSONEncoder)
                 else:
                     a = sankey_plot.draw_sankey(selected_options, self.lineages_path, self.nodes_path,self.error_path,"normal")

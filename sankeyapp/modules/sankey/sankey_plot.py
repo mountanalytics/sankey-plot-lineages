@@ -119,7 +119,7 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
     """
     Dashboard logic
     """
-    if marks == "normal" or marks == "hard_code":
+    if marks == "normal" or marks == "hard_code" or marks == "rat_score":
         if len(name) == 1: # if only one view
             df = pd.read_csv(f'{lineages_path}/lineage-{name[0]}.csv')
             title = f"Sankey of control node: {name[0]}"
@@ -140,8 +140,10 @@ def draw_sankey(name:str, lineages_path:str, nodes_path:str, error_path: str, ma
         df = pd.read_csv(f'{error_path}/del-error-{name[0]}.csv')
         title = f"Sankey of control node: {name[0]}"
 
-    df_labels = pd.read_csv(nodes_path, sep = ',')
-
+    if marks != "rat_score":
+        df_labels = pd.read_csv(nodes_path, sep = ',')
+    else: 
+        df_labels = pd.read_csv("output-data/nodes_rat_score.csv", sep = ',')
     df['source_to_target'] = df[['SOURCE_FIELD', 'TARGET_FIELD']].agg('=>'.join, axis=1)
 
     #df['source_to_target_transformation'] = df[['source_to_target', 'TRANSFORMATION']].apply(
